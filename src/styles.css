@@ -1,0 +1,106 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import "tailwindcss";
+
+@layer components {
+  .tcg-card-shadow {
+    box-shadow: 
+      0 0 0 1px rgba(0,0,0,0.1),
+      0 10px 20px rgba(0,0,0,0.2),
+      0 6px 6px rgba(0,0,0,0.2),
+      inset 0 0 100px rgba(255,255,255,0.1);
+  }
+
+  .tcg-holographic {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tcg-holographic::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      125deg,
+      transparent 0%,
+      rgba(255,255,255,0.1) 30%,
+      rgba(255,255,255,0.8) 50%,
+      rgba(255,255,255,0.1) 70%,
+      transparent 100%
+    );
+    background-size: 200% 200%;
+    animation: holo 3s linear infinite;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+}
+
+@keyframes holo {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 200%; }
+}
+
+.animate-tcg-entry {
+  animation: tcg-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes tcg-entry {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateX(20deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateX(0);
+  }
+}
+
+.animate-bounce-once {
+  animation: bounce-once 0.5s ease-in-out;
+}
+
+.animate-in {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-in-from-bottom-4 {
+  animation-name: slideInFromBottom4;
+}
+
+.slide-in-from-bottom-8 {
+  animation-name: slideInFromBottom8;
+}
+
+.zoom-in {
+  animation-name: zoomIn;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInFromBottom4 {
+  from { transform: translateY(1rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInFromBottom8 {
+  from { transform: translateY(2rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce-once {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+}

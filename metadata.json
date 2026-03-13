@@ -1,0 +1,5 @@
+{
+  "name": "PokéDex 2000",
+  "description": "Offline Pokémon search engine with 2000 entries, filtering by ID, HP, Name, and Type.",
+  "requestFramePermissions": []
+}
