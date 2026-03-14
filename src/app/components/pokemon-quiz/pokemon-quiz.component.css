@@ -1,0 +1,6 @@
+:host {
+  display: block;
+}
+.brightness-0 {
+  filter: brightness(0);
+}

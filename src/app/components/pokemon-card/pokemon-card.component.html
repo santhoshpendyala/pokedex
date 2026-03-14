@@ -1,0 +1,83 @@
+<div (click)="select()" 
+     (keydown.enter)="select()"
+     tabindex="0"
+     role="button"
+     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl duration-300 border border-gray-200 cursor-pointer group focus:ring-4 focus:ring-blue-300 outline-none relative">
+  
+  <!-- Favorite Button -->
+  <button 
+    (click)="toggleFavorite($event)"
+    class="absolute top-2 left-2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-md flex items-center justify-center transition-all hover:scale-110 active:scale-90 group/fav"
+    [class.text-red-500]="isFavorite()"
+    [class.text-slate-300]="!isFavorite()">
+    <mat-icon class="text-xl transition-all duration-300 group-hover/fav:text-red-400"
+              [class.scale-125]="isFavorite()"
+              [class.animate-bounce-once]="isFavorite()">
+      {{ isFavorite() ? 'favorite' : 'favorite_border' }}
+    </mat-icon>
+  </button>
+
+  <div class="relative bg-gray-100 p-4 flex justify-center items-center h-64 group-hover:bg-gray-50 transition-colors">
+    <img 
+      [src]="pokemon().image" 
+      [alt]="pokemon().name"
+      class="object-contain h-full w-full drop-shadow-md"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+      (error)="handleImageError($event)"
+    />
+    <span class="absolute top-2 right-2 bg-gray-800 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-sm">
+      #{{ pokemon().id }}
+    </span>
+  </div>
+  
+  <div class="p-4">
+    <h3 class="text-xl font-bold text-gray-800 mb-1 capitalize">{{ pokemon().name }}</h3>
+    
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex gap-1">
+        @for (type of pokemon().types; track type) {
+          <span 
+            [ngClass]="getTypeClass(type)"
+            class="text-xs font-semibold px-2 py-1 rounded-md text-white shadow-sm">
+            {{ type }}
+          </span>
+        }
+      </div>
+      <div class="flex items-center text-gray-600 font-medium text-sm">
+        <span class="material-icons text-red-500 text-sm mr-1">favorite</span>
+        {{ pokemon().hp }} HP
+      </div>
+    </div>
+
+    <!-- Generation and Abilities -->
+    <div class="flex flex-wrap gap-2 mb-3">
+      <span class="text-[10px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded uppercase tracking-wider">
+        Gen {{ pokemon().generation }}
+      </span>
+      @if (pokemon().primaryAbility) {
+        <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">
+          {{ pokemon().primaryAbility }}
+        </span>
+      }
+      @if (pokemon().secondaryAbility) {
+        <span class="text-[10px] font-bold bg-purple-50 text-purple-600 px-2 py-0.5 rounded border border-purple-100">
+          {{ pokemon().secondaryAbility }}
+        </span>
+      }
+    </div>
+    
+    <p class="text-gray-600 text-xs line-clamp-2 h-8 leading-4 mb-4">
+      {{ pokemon().description }}
+    </p>
+
+    <!-- Compare Button -->
+    <button 
+      (click)="toggleCompare($event)"
+      class="w-full py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center space-x-2"
+      [ngClass]="isInComparison() ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-slate-900 text-white hover:bg-slate-800'">
+      <mat-icon class="text-sm">{{ isInComparison() ? 'remove_circle_outline' : 'compare_arrows' }}</mat-icon>
+      <span>{{ isInComparison() ? 'Remove from Compare' : 'Add to Compare' }}</span>
+    </button>
+  </div>
+</div>
