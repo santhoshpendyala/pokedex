@@ -6,5 +6,7 @@ export const routes: Routes = [
   {path: 'search', loadComponent: () => import('./components/pokemon-search/pokemon-search.component').then(m => m.PokemonSearchComponent)},
   {path: 'quiz', loadComponent: () => import('./components/pokemon-quiz/pokemon-quiz.component').then(m => m.PokemonQuizComponent)},
   {path: 'compare', loadComponent: () => import('./components/pokemon-compare/pokemon-compare.component').then(m => m.PokemonCompareComponent)},
+  {path: 'info', loadComponent: () => import('./components/info/info.component').then(m => m.InfoComponent)},
+  {path: 'about', loadComponent: () => import('./components/about/about.component').then(m => m.AboutComponent)},
   {path: '**', redirectTo: ''}
 ];

@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, signal, inject} from '@angular/core';
-import {RouterLink, RouterOutlet, Router} from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
-import {CommonModule} from '@angular/common';
-import {PokemonService} from './services/pokemon.service';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { PokemonService } from './services/pokemon.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -93,26 +93,26 @@ import {PokemonService} from './services/pokemon.service';
           <!-- Mobile Menu -->
           <div class="lg:hidden overflow-hidden transition-all duration-300 ease-in-out"
                [class.max-h-0]="!isMenuOpen()"
-               [class.max-h-96]="isMenuOpen()">
-            <div class="border-t border-slate-100 bg-slate-50/50 px-4 py-6 space-y-2">
+               [class.max-h-[70vh]]="isMenuOpen()">
+            <div class="border-t border-slate-100 bg-slate-50/50 px-3 py-3 space-y-1 overflow-y-auto max-h-[70vh]">
               @for (item of menuItems; track item.label) {
                 <a [routerLink]="item.path" (click)="handleMenuClick(item.label)" 
-                   class="flex w-full items-center space-x-4 rounded-xl p-4 text-slate-600 transition-all hover:bg-white hover:shadow-sm hover:text-slate-900">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-lg shadow-sm" [style.backgroundColor]="item.color + '20'">
-                    <mat-icon [style.color]="item.color">{{ item.icon }}</mat-icon>
+                   class="flex w-full items-center space-x-3 rounded-xl p-3 text-slate-600 transition-all hover:bg-white hover:shadow-sm hover:text-slate-900">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-lg shadow-sm" [style.backgroundColor]="item.color + '20'">
+                    <mat-icon [style.color]="item.color" class="text-base h-4 w-4 flex items-center justify-center">{{ item.icon }}</mat-icon>
                   </div>
-                  <span class="font-bold">{{ item.label }}</span>
+                  <span class="font-bold text-sm">{{ item.label }}</span>
                   @if (item.label === 'Favorites' && pokemonService.favorites().length > 0) {
-                    <span class="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-[10px] font-bold text-white shadow-sm">
+                    <span class="ml-2 flex h-4 w-4 items-center justify-center rounded-full bg-pink-500 text-[9px] font-bold text-white shadow-sm">
                       {{ pokemonService.favorites().length }}
                     </span>
                   }
                   @if (item.label === 'Compare' && pokemonService.comparisonList().length > 0) {
-                    <span class="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-purple-500 text-[10px] font-bold text-white shadow-sm">
+                    <span class="ml-2 flex h-4 w-4 items-center justify-center rounded-full bg-purple-500 text-[9px] font-bold text-white shadow-sm">
                       {{ pokemonService.comparisonList().length }}
                     </span>
                   }
-                  <mat-icon class="ml-auto text-slate-300" [class.text-red-500]="isItemActive(item.label)">
+                  <mat-icon class="ml-auto text-slate-300 text-sm h-4 w-4 flex items-center justify-center" [class.text-red-500]="isItemActive(item.label)">
                     {{ isItemActive(item.label) ? 'check_circle' : 'chevron_right' }}
                   </mat-icon>
                 </a>
@@ -189,7 +189,8 @@ export class App {
     { label: 'Search', icon: 'search', color: '#3b82f6', path: '/search' },
     { label: 'Compare', icon: 'compare_arrows', color: '#8b5cf6', path: '/compare' },
     { label: 'Quiz', icon: 'quiz', color: '#eab308', path: '/quiz' },
-    { label: 'About', icon: 'info', color: '#22c55e', path: '/' }
+    { label: 'About', icon: 'info', color: '#22c55e', path: '/about' },
+    { label: 'Info', icon: 'info', color: '#2b9bc7', path: '/info' }
   ];
 
   handleMenuClick(label: string) {
@@ -210,6 +211,8 @@ export class App {
     if (label === 'Quiz') return currentUrl.includes('/quiz');
     if (label === 'Search') return currentUrl.includes('/search');
     if (label === 'Compare') return currentUrl.includes('/compare');
+    if (label === 'Info') return currentUrl.includes('/info');
+    if (label === 'About') return currentUrl.includes('/about');
     if (label === 'Favorites') return currentUrl === '/' && this.pokemonService.showFavoritesOnly();
     if (label === 'Home') return currentUrl === '/' && !this.pokemonService.showFavoritesOnly();
     return false;
